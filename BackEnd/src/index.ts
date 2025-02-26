@@ -4,6 +4,7 @@ import connectDB from './utils/connectDB';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 app.use(express.json({ limit: '10kb' }));
@@ -24,9 +25,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 
-app.use('/api/users',userRoute)
+app.use('/api/users',userRoutes)
 
-app.use('/api/admin',adminRoute)
 
 
 
