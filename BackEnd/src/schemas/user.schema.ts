@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from 'zod';
+import { boolean, object, string, TypeOf } from 'zod';
 
 export const createUserSchema = object({
   body: object({
@@ -12,7 +12,7 @@ export const createUserSchema = object({
     .max(15, 'Phone number must be less than 15 digits')
     .regex(/^[0-9]+$/, 'Phone number must contain only digits'),
     password: string({ required_error: 'Password is required' })
-      .min(6, 'Password must be more than 6 characters')
+      .min(6, 'Password must be more than 6 characters'),
     
 })})
 
@@ -30,6 +30,30 @@ export const loginUserSchema = object({
 });
 
 
+export const sendOTPSchema = object({
+  body: object({
+    email: string({ required_error: 'sendingOTP is required' }).email(
+      'Invalid OTP'
+    ),
+  }),
+});
+
+
+
+
+export const verifyOTPSchema = object({
+  body: object({
+    email: string({ required_error: 'Email is required' }).email(
+      'Invalid email'
+    ),
+    otp:string({ required_error: 'otp is required' })
+  }),
+});
+
+
+
 
 export type CreateUserInput = TypeOf<typeof createUserSchema>['body'];
 export type LoginUserInput = TypeOf<typeof loginUserSchema>['body'];
+export type sendOTPInput = TypeOf<typeof sendOTPSchema>['body'];
+export type verifyOTPInput = TypeOf<typeof verifyOTPSchema>['body']

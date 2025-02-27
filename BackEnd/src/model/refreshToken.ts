@@ -1,10 +1,12 @@
 import mongoose, { Types } from 'mongoose';
+import { boolean } from 'zod';
 
 
 export interface RefreshTokenType extends Document {
     user: Types.ObjectId; 
     token: string; 
-    role?: string; 
+
+
     expiresAt: Date; 
     createdAt: Date; 
 }
@@ -18,9 +20,8 @@ const refreshTokenSchema = new mongoose.Schema<RefreshTokenType>({
         type: String,
         required: true,
     },
-    role:{
-        type: String
-    },
+  
+  
     expiresAt: {
         type: Date,
         required: true,

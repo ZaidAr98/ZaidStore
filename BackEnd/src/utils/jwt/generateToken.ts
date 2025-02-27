@@ -1,8 +1,12 @@
 import jwt from 'jsonwebtoken';
-import { CreateUserInput } from '../../schemas/user.schema';
+
 import dotenv from 'dotenv';
 import config from 'config';
+import { refreshTokenInput } from '../../schemas/refreshToken.schema';
+
 dotenv.config();
+
+
 
 const tokenKey = process.env.TOKEN_KEY as string;
 const adminTokenKey = process.env.ADMIN_TOKEN_KEY as string;
@@ -10,7 +14,7 @@ const adminTokenKey = process.env.ADMIN_TOKEN_KEY as string;
 const refreshTokenKey = process.env.REFRESH_TOKEN_KEY as string; // Use a separate secret key for refresh tokens
 const adminRefreshTokenKey = process.env.ADMIN_REFRESH_TOKEN_KEY as string;
 
-const generateAccessToken = (user: CreateUserInput) => {
+const generateAccessToken = (user: refreshTokenInput) => {
     if (!user?.role) {
         console.log("Generating access token for user");
         return jwt.sign({ user }, tokenKey, { expiresIn:`${config.get<number>('accessTokenExpiresIn')}m`});
@@ -19,7 +23,7 @@ const generateAccessToken = (user: CreateUserInput) => {
     return jwt.sign({ user }, adminTokenKey, { expiresIn:`${config.get<number>('accessTokenExpiresIn')}m`});
 };
 
-const generateRefreshToken = (user: CreateUserInput) => {
+const generateRefreshToken = (user: refreshTokenInput) => {
     if (!user?.role) {
         console.log("Generating refresh token for user");
         return jwt.sign({ user }, refreshTokenKey, { expiresIn: `${config.get<number>('accessTokenExpiresIn')}m` });
