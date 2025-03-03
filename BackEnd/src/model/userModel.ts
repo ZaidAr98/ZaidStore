@@ -15,9 +15,7 @@ const userSchema = new mongoose.Schema<CreateUserInput>({
     trim: true,
     unique: true, 
   },
-  role:{
-    type: String
-},
+
   phone: {
     type: String,
     required: true,
@@ -25,11 +23,6 @@ const userSchema = new mongoose.Schema<CreateUserInput>({
     minLength: 10,
     maxLength: 15,
   },
-//   verified:{
-//     type : Boolean,
-//     required: true,
-//     default:false
-// },
   password: {
     type: String,
     required: true,
