@@ -23,13 +23,13 @@ export const creatAdminSchema = object({
     email: string({ required_error: 'Email is required' }).email(
       'Invalid email'
     ),
-    role:string({required_error:"role is required"}),
+    role:string({required_error:"role is required"}).optional(),
     phone: string({ required_error: 'Phone number is required' })
     .min(10, 'Phone number must be at least 10 digits')
     .max(15, 'Phone number must be less than 15 digits')
     .regex(/^[0-9]+$/, 'Phone number must contain only digits').optional(),
     password: string({ required_error: 'Password is required' })
-      .min(6, 'Password must be more than 6 characters'),
+      .min(6, 'Password must be more than 6 characters').optional(),
     
 })})
 

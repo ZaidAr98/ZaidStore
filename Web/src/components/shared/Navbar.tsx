@@ -11,14 +11,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const isLoggedIn = useSelector((state:RootState) => state?.user?.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
   //limit navigation calls
-  const throttledNavigate=throttle((term:any)=>{
+  const throttledNavigate=throttle((term:string)=>{
     const trimmedTerm=term.trim()
     if(trimmedTerm){
       navigate(`/shop?term=${trimmedTerm}`)
@@ -29,10 +29,10 @@ const Navbar = () => {
 
   //debounce input handler//handle frequent typing events
   //wait 300ms for last input
-  const handleSearch=debounce((term:any)=>{
+  const handleSearch=debounce((term:string)=>{
     throttledNavigate(term)
   },300)
-  const handleInputChange=(e:any)=>{
+  const handleInputChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
 const value=e.target.value;
 setSearchTerm(value);
 handleSearch(value)//debounce call
@@ -59,7 +59,7 @@ handleSearch(value)//debounce call
 
   return (
     
-    <header className="fixed top-0 w-full z-50">
+    <header className="fixed top-0 left-0  w-full z-50">
       <div className={`w-full  px-4 py-2 flex items-center justify-between transition-all ease-in-out duration-300  ${isScrolled ? 'bg-white bg-opacity-90 shadow-lg' : 'bg-white shadow-lg bg-opacity-95'} sm:rounded-b-lg`}>
         {/* Logo */}
         <h1 className="text-xl md:text-2xl font-serif cursor-pointer" onClick={() => navigate('/')}>

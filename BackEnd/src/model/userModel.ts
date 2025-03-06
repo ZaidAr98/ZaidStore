@@ -18,14 +18,14 @@ const userSchema = new mongoose.Schema<CreateUserInput>({
 
   phone: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     minLength: 10,
     maxLength: 15,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minLength: 6,
    
   },
