@@ -16,6 +16,8 @@ import { Route, Routes } from "react-router-dom";
 import UserPage from "./pages/user/auth/UserPage";
 import UserLogin from "./pages/user/auth/UserLogin";
 import AdminLoginPage from "./pages/admin/auth/AdminLoginPage";
+import AddProduct from "./components/products/AddProduct";
+import EditProduct from "./components/products/EditProduct";
 
 
 function App() {
@@ -57,7 +59,22 @@ function App() {
             </IsUserLogout>
           }
         />
-
+   <Route
+            path="/admin/product/add"
+            element={
+              <IsAdminLogin>
+                <AddProduct />
+              </IsAdminLogin>
+            }
+          ></Route>
+   <Route
+            path="/admin/product/edit/:productId"
+            element={
+              <IsAdminLogin>
+                <EditProduct />
+              </IsAdminLogin>
+            }
+          ></Route>
         <Route
           path="/UserPage"
           element={

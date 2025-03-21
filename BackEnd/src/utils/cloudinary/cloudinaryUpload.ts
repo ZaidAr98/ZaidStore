@@ -1,21 +1,27 @@
-import { UploadApiErrorResponse, UploadApiResponse } from "cloudinary";
-import cloudinary from "../../config/cloudinaryConfig";
+import cloudinary from "cloudinary";
 
-export const cloudinaryImageUploadMethod = async (fileBuffer: Buffer): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        cloudinary.uploader
-            .upload_stream(
-                { folder: "products" }, 
-                (err: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
-                    if (err) {
-                        reject(new Error(`Upload image error: ${err.message}`));
-                    } else if (result) {
-                        resolve(result.secure_url); // Return secure URL of the uploaded image
-                    } else {
-                        reject(new Error("No result from Cloudinary"));
-                    }
-                }
-            )
-            .end(fileBuffer); 
+
+const uploadImages = async(imageFiles: Express.Multer.File[]) =>{
+    const uploadPromises = imageFiles.map(async (image) => {
+      const b64 = Buffer.from(image.buffer).toString("base64");
+      let dataURI = "data:" + image.mimetype + ";base64," + b64;
+      const res = await cloudinary.v2.uploader.upload(dataURI);
+      return res.url;
     });
-};
+  
+    const imageUrls = await Promise.all(uploadPromises);
+    return imageUrls;
+  }
+
+
+  export default uploadImages
+
+
+
+  export const cloudinaryDeleteImages = async (publicIds: string[]): Promise<any> => {
+    const deletePromises = publicIds.map(async (publicId) => {
+      return await cloudinary.v2.uploader.destroy(publicId);
+    });
+  
+    return await Promise.all(deletePromises);
+  };

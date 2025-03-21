@@ -6,11 +6,21 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import userRoutes from './routes/userRoutes';
 import adminRoutes from "./routes/adminRoutes"
+import { v2 as cloudinary } from "cloudinary"
+
 
 const app = express();
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});  
 
 app.use(
     cors({
