@@ -8,6 +8,7 @@ export type ProductType ={
   company: string;
   description: string;
   price: number;
+  isListed:boolean;
   laptopType: string;
   categoryId: Types.ObjectId;
   sizes: { size: string; price: number; stock: number }[];

@@ -15,11 +15,14 @@ import IsUserLogin from "./store/protect/isUserLogin";
 import { Route, Routes } from "react-router-dom";
 import UserPage from "./pages/user/auth/UserPage";
 import UserLogin from "./pages/user/auth/UserLogin";
-import AdminLoginPage from "./pages/admin/auth/AdminLoginPage";
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
 import AddProduct from "./components/admin/products/AddProduct";
 import EditProduct from "./components/admin/products/EditProduct";
 import EditCategory from "./components/admin/categories/EditCategory";
 import AddCategory from "./components/admin/categories/AddCategory";
+import Categories from "./components/admin/categories/Categories";
+import Product from "./components/admin/products/Product";
+import DashboardLayout from "./pages/admin/DashboardLayout";
 
 
 function App() {
@@ -63,38 +66,23 @@ function App() {
             </IsUserLogout>
           }
         />
-   <Route
-            path="/admin/product/add"
+
+  <Route
+            path="/admin/dashboard"
             element={
               <IsAdminLogin>
-                <AddProduct />
+                <DashboardLayout />
               </IsAdminLogin>
             }
-          ></Route>
-   <Route
-            path="/admin/product/edit/:productId"
-            element={
-              <IsAdminLogin>
-                <EditProduct />
-              </IsAdminLogin>
-            }
-          ></Route>
-   <Route
-            path="/admin/categories/add"
-            element={
-              <IsAdminLogin>
-                <AddCategory/>
-              </IsAdminLogin>
-            }
-          ></Route>
-   <Route
-            path="/admin/categories/edit/:catId"
-            element={
-              <IsAdminLogin>
-                <EditCategory  />
-              </IsAdminLogin>
-            }
-          ></Route>
+          >
+            {/* <Route index element={<Dashboard/>} /> */}
+            <Route path="products" element={<Product />} />
+            <Route path="products/add" element={<AddProduct />} />
+            <Route path="products/edit" element={<EditProduct />} />
+            <Route path="categories" element={<Categories />} />
+            <Route path="categories/add" element={<AddCategory />} />
+            <Route path="categories/edit" element={<EditCategory />} />
+                      </Route>
         <Route
           path="/UserPage"
           element={

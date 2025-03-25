@@ -16,6 +16,7 @@ const productSchema = new mongoose.Schema<ProductType>(
     company: { type: String, required: true, index: true },
     description: { type: String, required: true },
     price: { type: Number, required: true, min: [0, 'Price cannot be negative'] },
+    isListed:{ type: Boolean , default:true},
     laptopType: { type: String, enum: ['PC', 'Laptop'], required: true },
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', index: true },
     sizes: [sizeSchema],

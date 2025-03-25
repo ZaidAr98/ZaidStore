@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import  { adminAxiosInstance } from "../../../config/axiosConfig";
-import { useNavigate,useLocation,useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ImageCropper from "../../shared/ImageCropper";
 
 
@@ -72,7 +72,8 @@ export type ProductFormData = {
    const [categories, setCategories] = useState<Category[]>([]);
    const [toDelete,setToDelete]=useState<CroppedImage[]>([])
    const navigate =useNavigate()
-   const { productId } = useParams<{ productId: string }>();
+   const location = useLocation();
+   const { productId } = location.state;
 
 
    useEffect(()=>{

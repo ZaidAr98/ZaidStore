@@ -24,12 +24,12 @@ const AddCategory: React.FC = () => {
       categoryDescription: '',
     };
 
-    // Category Name: Required, Min length: 3, Max length: 50, No special characters
+    // Category Name: Required, Min length: 2, Max length: 50, No special characters
     if (categoryName.trim() === '') {
       newErrors.categoryName = 'Category Name is required';
       valid = false;
-    } else if (categoryName.length < 3) {
-      newErrors.categoryName = 'Category Name must be at least 3 characters long';
+    } else if (categoryName.length <2) {
+      newErrors.categoryName = 'Category Name must be at least 2 characters long';
       valid = false;
     } else if (categoryName.length > 50) {
       newErrors.categoryName = 'Category Name must be less than 50 characters';

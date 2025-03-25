@@ -4,7 +4,7 @@ import {upload} from "../config/multerConfig"
 import { validate } from "../middleware/validate";
 import { adminLogin, adminLogout, refreshAdminAccessToken } from "../controllers/admin/adminController";
 // import { addProduct, editProduct, listProduct, showProduct, showProducts } from "../controllers/admin/productController";
-import { addProduct, editProduct, showProduct } from "../controllers/admin/productController";
+import { addProduct, editProduct, listProduct, showProduct, showProducts } from "../controllers/admin/productController";
 import authenticateAdminToken from "../middleware/admin/authMiddleware";
 // import productSchema from "../schemas/productSchema";
 import { addCategory, editCategory, listCategory, showCategories, showCategory } from "../controllers/admin/categoryController";
@@ -24,10 +24,9 @@ router.post('/refresh-token',refreshAdminAccessToken)
 
 
 //products
-// router.post('/products',validate(productSchema),authenticateAdminToken,upload.array('images',1),addProduct)
 router.post('/products',validate(productSchema),upload.array("images", 2),authenticateAdminToken,addProduct)
-// router.get('/products',authenticateAdminToken,showProducts)
-// router.patch('/products/:id',authenticateAdminToken,listProduct)
+router.get('/products',authenticateAdminToken,showProducts)
+router.patch('/products/:id',authenticateAdminToken,listProduct)
 router.get('/products/:_id',authenticateAdminToken,showProduct)
 router.put('/products/:_id',validate(productSchema),upload.array('images',2),authenticateAdminToken,editProduct)
 

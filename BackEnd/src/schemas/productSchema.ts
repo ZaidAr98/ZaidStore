@@ -14,7 +14,7 @@ export const productSchema = z.object({
     invalid_type_error: 'Laptop type must be either "PC" or "Laptop".',
   }).optional(),
   categoryId: z.string({ required_error: 'Category ID is required.' }).optional(),
-  sizes: z
+    sizes: z
     .array(
       z.object({
         _id:z.string({required_error: 'Id is required.'}).optional(),

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { adminAxiosInstance } from "@/config/axiosConfig";
 import { Toaster, toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,9 @@ interface LocationState {
 const EditCategory: React.FC = () => {
   const [categoryData, setCategoryData] = useState<CategoryData>({});
   const navigate = useNavigate();
-  const { catId } = useParams<{ catId: string }>();
-  
+  const location = useLocation();
+  const { catId } = location.state;
+
 
   useEffect(() => {
     async function getCategory() {

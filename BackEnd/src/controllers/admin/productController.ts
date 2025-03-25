@@ -38,104 +38,106 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-// interface ProductQueryParams {
-//   categoryIds?: string;
-//   laptopType?: string;
-//   minPrice?: string;
-//   maxPrice?: string;
-//   searchTerm?: string;
-//   sort?: string;
-// }
+interface ProductQueryParams {
+  categoryIds?: string;
+  laptopType?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  searchTerm?: string;
+  sort?: string;
+}
 
-// interface ProductFilters {
-//   categoryId?: { $in: string[] };
-//   laptopType?: { $in: string[] };
-//   price?: { $gte?: number; $lte?: number };
-//   $or?: Array<{ [key: string]: { $regex: string; $options: string } }>;
-// }
+interface ProductFilters {
+  categoryId?: { $in: string[] };
+  laptopType?: { $in: string[] };
+  price?: { $gte?: number; $lte?: number };
+  $or?: Array<{ [key: string]: { $regex: string; $options: string } }>;
+}
 
-// type SortOrder = 1 | -1;
+type SortOrder = 1 | -1;
 
-// interface SortOption {
-//   [key: string]: SortOrder;
-// }
+interface SortOption {
+  [key: string]: SortOrder;
+}
 
-// export const showProducts = async (req: Request<{}, {}, {}, ProductQueryParams>, res: Response): Promise<void> => {
-//   try {
-//     const { categoryIds, laptopType, minPrice, maxPrice, searchTerm, sort } = req.query;
-//     console.log(req.query);
+export const showProducts = async (req: Request<{}, {}, {}, ProductQueryParams>, res: Response): Promise<void> => {
+  try {
+    const { categoryIds, laptopType, minPrice, maxPrice, searchTerm, sort } = req.query;
+    console.log(req.query);
 
-//     const filters: ProductFilters = {};
+    const filters: ProductFilters = {};
 
-//     if (categoryIds) {
-//       const categoryArray = categoryIds.split(',');
-//       filters.categoryId = { $in: categoryArray };
-//     }
+    if (categoryIds) {
+      const categoryArray = categoryIds.split(',');
+      filters.categoryId = { $in: categoryArray };
+    }
 
-//     if (laptopType) {
-//       const laptopTypeArray = laptopType.split(',');
-//       filters.laptopType = { $in: laptopTypeArray };
-//     }
+    if (laptopType) {
+      const laptopTypeArray = laptopType.split(',');
+      filters.laptopType = { $in: laptopTypeArray };
+    }
 
-//     if (minPrice || maxPrice) {
-//       filters.price = {};
-//       if (minPrice) filters.price.$gte = parseFloat(minPrice);
-//       if (maxPrice) filters.price.$lte = parseFloat(maxPrice);
-//     }
+    if (minPrice || maxPrice) {
+      filters.price = {};
+      if (minPrice) filters.price.$gte = parseFloat(minPrice);
+      if (maxPrice) filters.price.$lte = parseFloat(maxPrice);
+    }
 
-//     if (searchTerm) {
-//       filters.$or = [
-//         { name: { $regex: searchTerm, $options: 'i' } },
-//         { 'categoryId.name': { $regex: searchTerm, $options: 'i' } },
-//       ];
-//     }
+    if (searchTerm) {
+      filters.$or = [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { 'categoryId.name': { $regex: searchTerm, $options: 'i' } },
+      ];
+    }
 
-//     const sortOption: SortOption = {};
-//     if (sort === 'priceHighLow') {
-//       sortOption.price = -1; // Descending order
-//     } else if (sort === 'priceLowHigh') {
-//       sortOption.price = 1; // Ascending order
-//     }
+    const sortOption: SortOption = {};
+    if (sort === 'priceHighLow') {
+      sortOption.price = -1; // Descending order
+    } else if (sort === 'priceLowHigh') {
+      sortOption.price = 1; // Ascending order
+    }
 
-//     const products = await Product.find(filters)
-//       .sort(sortOption)
-//       .populate('categoryId', 'name');
+    const products = await Product.find(filters)
+      .sort(sortOption)
+      .populate('categoryId', 'name');
 
-//     res.status(200).json({ success: true, message: 'Products fetched', products });
-//   } catch (error: any) {
-//     res.status(400).json({ success: false, message: 'Data fetching failed.' });
-//     console.log('Error in fetching:', error.message);
-//   }
-// };
+    res.status(200).json({ success: true, message: 'Products fetched', products });
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: 'Data fetching failed.' });
+    console.log('Error in fetching:', error.message);
+  }
+};
 
-// export const listProduct = async (req: Request, res: Response): Promise<void> => {
-//   const { id } = req.params;
 
-//   try {
-//     const product = await Product.findById(id);
 
-//     if (!product) {
-//       res.status(404).json({ success: false, message: "Product not found" });
-//       return;
-//     }
+export const listProduct = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
 
-//     product.isListed = !product.isListed;
+  try {
+    const product = await Product.findById(id);
 
-//     await product.save();
+    if (!product) {
+      res.status(404).json({ success: false, message: "Product not found" });
+      return;
+    }
 
-//     console.log("Product listing status updated");
+    product.isListed = !product.isListed;
 
-//     res.status(200).json({ success: true, message: "Product status changed", product });
+    await product.save();
 
-//   } catch (error: any) {
-//     console.error("Error in updating status:", error);
+    console.log("Product listing status updated");
 
-//     res.status(error?.status || 500).json({
-//       success: false,
-//       message: error?.message || "Something went wrong",
-//     });
-//   }
-// };
+    res.status(200).json({ success: true, message: "Product status changed", product });
+
+  } catch (error: any) {
+    console.error("Error in updating status:", error);
+
+    res.status(error?.status || 500).json({
+      success: false,
+      message: error?.message || "Something went wrong",
+    });
+  }
+};
 
 export const showProduct = async (req:Request, res:Response): Promise<void>  => {
   const { _id } = req.params;
