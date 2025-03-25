@@ -85,7 +85,13 @@ export type ProductFormData = {
      
             setProductData(restProducts)
             setSizes(response.data.product.sizes)
-            setCroppedImages(images)
+
+            const initialImages = images.map((imgUrl: string) => ({
+              croppedImageUrl: imgUrl,
+              compressedImage: new File([], '') // Empty file as placeholder
+          }));
+
+            setCroppedImages(initialImages)
             console.log("product data fetched",response.data.product);
         } catch (error:any) {
             toast.error("Product not found.")
@@ -322,19 +328,19 @@ const  handleSubmit = async (e:React.FormEvent) =>{
                       alt={`Cropped ${index + 1}`}
                       className="w-full h-40 object-cover rounded-lg"
                     />
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2"
-                      onClick={() =>{
-                        setCroppedImages((prev) =>
-                          prev.filter((_, i) => i !== index)
-                        )
-                        {!croppedData.croppedImageUrl && setToDelete((prev)=>[...prev,croppedData])}
+                       <Button
+                        variant="destructive"
+                        size="icon"
+                        className="absolute top-2 right-2"
+                        onClick={() => {
+                            setCroppedImages((prev) =>
+                                prev.filter((_, i) => i !== index)
+                            );
 
-                      }
-                     
-                      }
+                            if (croppedData.compressedImage.size === 0) {
+                                setToDelete((prev) => [...prev, croppedData]);
+                            }
+                        }}
                     >
                       <X className="h-4 w-4" />
                     </Button>
