@@ -12,8 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import  { adminAxiosInstance } from "../../config/axiosConfig";
-import ImageCropper from "../shared/ImageCropper";
+import  { adminAxiosInstance } from "../../../config/axiosConfig";
+import ImageCropper from "../../shared/ImageCropper";
 import { useNavigate } from "react-router-dom";
 
 export type ProductFormData = {

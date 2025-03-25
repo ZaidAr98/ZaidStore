@@ -12,9 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import  { adminAxiosInstance } from "../../config/axiosConfig";
+import  { adminAxiosInstance } from "../../../config/axiosConfig";
 import { useNavigate,useLocation,useParams } from "react-router-dom";
-import ImageCropper from "../shared/ImageCropper";
+import ImageCropper from "../../shared/ImageCropper";
 
 
 

@@ -16,14 +16,18 @@ import { Route, Routes } from "react-router-dom";
 import UserPage from "./pages/user/auth/UserPage";
 import UserLogin from "./pages/user/auth/UserLogin";
 import AdminLoginPage from "./pages/admin/auth/AdminLoginPage";
-import AddProduct from "./components/products/AddProduct";
-import EditProduct from "./components/products/EditProduct";
+import AddProduct from "./components/admin/products/AddProduct";
+import EditProduct from "./components/admin/products/EditProduct";
+import EditCategory from "./components/admin/categories/EditCategory";
+import AddCategory from "./components/admin/categories/AddCategory";
 
 
 function App() {
   return (
     <>
       <Routes>
+
+      {/* <Route path="/" element={<LandingPage />} /> */}
         <Route
           path="/login"
           element={
@@ -72,6 +76,22 @@ function App() {
             element={
               <IsAdminLogin>
                 <EditProduct />
+              </IsAdminLogin>
+            }
+          ></Route>
+   <Route
+            path="/admin/categories/add"
+            element={
+              <IsAdminLogin>
+                <AddCategory/>
+              </IsAdminLogin>
+            }
+          ></Route>
+   <Route
+            path="/admin/categories/edit/:catId"
+            element={
+              <IsAdminLogin>
+                <EditCategory  />
               </IsAdminLogin>
             }
           ></Route>
