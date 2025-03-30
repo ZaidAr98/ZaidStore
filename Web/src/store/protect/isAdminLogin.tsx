@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 
-interface RootState {
+export interface RootState {
     admin: {
       adminInfo: any; 
     };
