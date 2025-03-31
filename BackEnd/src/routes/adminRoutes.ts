@@ -10,6 +10,8 @@ import authenticateAdminToken from "../middleware/admin/authMiddleware";
 import { addCategory, editCategory, listCategory, showCategories, showCategory } from "../controllers/admin/categoryController";
 import {categorySchema} from "../schemas/categorySchema";
 import { productSchema } from "../schemas/productSchema";
+import { approveReturnRequest, cancelOrder, declineReturnRequest, getOrders, getPendingRequests, updateStatus } from "../controllers/admin/orderController";
+import { fetchBestCategories, fetchBestProducts, getOverviewStats, getRecentOrders, getRevenue } from "../controllers/admin/dashboardController";
 
 
 
@@ -40,5 +42,22 @@ router.get('/categories/:catId',authenticateAdminToken,showCategory)
 router.patch('/categories/list/:categoryId',authenticateAdminToken,listCategory)
 
 
+
+
+//dashboard
+router.get(`/dashboard/best-products`,authenticateAdminToken,fetchBestProducts)
+router.get(`/dashboard/best-categories`,authenticateAdminToken,fetchBestCategories)
+router.get('/dashboard/recent-orders',authenticateAdminToken,getRecentOrders)
+router.get('/dashboard/overview-stats',authenticateAdminToken,getOverviewStats)
+router.get('/dashboard/revenue',authenticateAdminToken,getRevenue)
+
+
+//orders
+router.get('/orders',authenticateAdminToken,getOrders)
+router.get('/orders/return',authenticateAdminToken,getPendingRequests)
+router.patch('/orders/:orderId/cancel/:itemId',authenticateAdminToken,cancelOrder)
+router.patch('/orders/:orderId/items/:itemId',authenticateAdminToken,updateStatus)
+router.put('/orders/:orderId/approve/:itemId',authenticateAdminToken,approveReturnRequest)
+router.put('/orders/:orderId/decline/:itemId',authenticateAdminToken,declineReturnRequest)
 
 export default router

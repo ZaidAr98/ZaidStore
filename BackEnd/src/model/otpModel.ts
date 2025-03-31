@@ -33,6 +33,6 @@ otpSchema.pre("save",async function (next) {
     
 })
 
-const OTP = mongoose.model<otpType>('otpSchema ', otpSchema );
+const OTP = mongoose.model<otpType>('otpSchema', otpSchema );
 
 export default OTP;

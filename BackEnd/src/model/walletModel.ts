@@ -1,0 +1,52 @@
+import mongoose from "mongoose";
+import { WalletType } from "../types/WalletType";
+
+const walletSchema = new mongoose.Schema<WalletType>({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true },
+    balance: { type: Number, default: 0 },
+    transactionHistory: [
+        {
+          transactionId: { type: String, unique: true,  },
+          type: {
+            type: String,
+            enum: ["credit", "debit", "refund"],
+            required: true,
+          },
+          amount: { type: Number, required: true ,min:0},
+          description: { type: String },
+          orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+          status: {
+            type: String,
+            enum: ["success", "failed", "pending"],
+            required: true,
+          }, // Transaction status
+          date: { type: Date, default: Date.now },
+        },
+      ],
+    },
+    { timestamps: true }
+)
+
+walletSchema.pre("save", function(next){
+    if(!this.transactionHistory){
+      this.balance=0
+      return next()
+    }
+    const successfullTransactions = this.transactionHistory.filter(
+      (transaction) => transaction.status === "success"
+    )
+  
+    this.balance = successfullTransactions?.length>0 ? successfullTransactions.reduce(
+      (acc, curr) =>
+        curr.type == "refund" || curr.type == "credit"
+          ? acc + curr.amount
+          : acc - curr.amount,
+      0
+    ):0
+  
+    next();
+  });
+
+  const Wallet = mongoose.model('walletSchema', walletSchema);
+  
+  export default Wallet;
