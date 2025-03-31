@@ -1,4 +1,4 @@
-import Product from "../../model/ProductModel";
+import Product from "../../model/productModel";
 import { Request, Response } from "express";
 import { ProductType } from "../../types/ProductType";
 import uploadImages, { cloudinaryDeleteImages } from "../../utils/cloudinary/cloudinaryUpload";
