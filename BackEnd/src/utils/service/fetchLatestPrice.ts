@@ -13,6 +13,7 @@ interface IProduct extends Document {
 }
 
 interface ICartItem {
+    _id:string;
     productId: Types.ObjectId | IProduct;
     size: string;
     quantity: number;

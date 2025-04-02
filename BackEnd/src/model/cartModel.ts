@@ -4,6 +4,7 @@ import { ProductType } from '../types/ProductType';
 
 
 export interface ICartItem {
+   _id:string;
     productId:any;
     size: string;
     quantity: number;

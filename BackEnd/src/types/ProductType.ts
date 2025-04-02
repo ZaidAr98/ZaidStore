@@ -3,7 +3,7 @@ import mongoose, {Types } from 'mongoose';
 import { offerType } from '../model/offerModel';
 
 
-interface ISize {
+export interface ProductSize {
   size: string;
   price: number;
   stock: number;
@@ -24,7 +24,7 @@ export type ProductType ={
   laptopType: string;
   categoryId: Types.ObjectId;
   offerId?: mongoose.Types.ObjectId;
-  sizes: ISize[];
+  sizes: ProductSize[];
    images: string[];
    totalStock: number;
    isFeatured: boolean;
