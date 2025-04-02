@@ -16,7 +16,7 @@ export const fetchBanners=async(req:Request,res:Response): Promise<void>=>{
 }
 
 
-export const addbanner = async (req: Request, res: Response): Promise<void> => {
+export const addBanner = async (req: Request, res: Response): Promise<void> => {
     try {
       const imageFiles = req.files as Express.Multer.File[];
       const {title,content,isActive} =req.body

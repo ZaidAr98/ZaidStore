@@ -14,6 +14,7 @@ import {OAuth2Client, TokenPayload} from "google-auth-library"
 import { refreshTokenInput } from "../../schemas/refreshToken.schema";
 import {sendResetPasswordMail} from "../../utils/nodeMailer/forgetPasswordMail"
 import { any } from "zod";
+import { Types } from "mongoose";
 
 
 
@@ -45,7 +46,10 @@ export const signup = async (req: Request, res: Response, next: NextFunction):Pr
 
         console.log("User registered successfully");
 
-         const userData:refreshTokenInput = { id: newUser._id.toString(), email: newUser.email };
+        const userData: refreshTokenInput = { 
+          id: (newUser._id as Types.ObjectId).toString(), 
+          email: newUser.email 
+        }; 
         const accessToken = generateAccessToken(newUser);
         const refreshToken = generateRefreshToken(newUser);
 
@@ -316,7 +320,7 @@ if(!user){
 }
 
 console.log("user",user);
-const userData:refreshTokenInput = { id: user._id.toString(), email: user.email };
+const userData:refreshTokenInput = {  id: (user._id as Types.ObjectId).toString(),  email: user.email };
 const accessToken = generateAccessToken(userData);
 const refreshToken = generateRefreshToken(userData);
 

@@ -12,6 +12,11 @@ import {categorySchema} from "../schemas/categorySchema";
 import { productSchema } from "../schemas/productSchema";
 import { approveReturnRequest, cancelOrder, declineReturnRequest, getOrders, getPendingRequests, updateStatus } from "../controllers/admin/orderController";
 import { fetchBestCategories, fetchBestProducts, getOverviewStats, getRecentOrders, getRevenue } from "../controllers/admin/dashboardController";
+import { changeCouponStatus, createCoupon, showCoupons } from "../controllers/admin/couponController";
+import { createCategoryoffer, createProductoffer, fetchOffers, fetchProducts } from "../controllers/admin/offerController";
+import { addBanner, deleteBanner, editBanner, fetchBanners } from "../controllers/admin/BannerController";
+import { fetchSalesData } from "../controllers/admin/saleController";
+import { editCustomerStatus, getCustomerDetails } from "../controllers/admin/userController";
 
 
 
@@ -21,6 +26,8 @@ const router = express.Router();
 router.post('/',validate(creatAdminSchema),adminLogin)
 router.post('/logout',adminLogout)
 router.post('/refresh-token',refreshAdminAccessToken)
+router.get('/customers',authenticateAdminToken,getCustomerDetails)
+router.patch('/customers/:userId',authenticateAdminToken,editCustomerStatus)
 
 
 
@@ -59,5 +66,26 @@ router.patch('/orders/:orderId/cancel/:itemId',authenticateAdminToken,cancelOrde
 router.patch('/orders/:orderId/items/:itemId',authenticateAdminToken,updateStatus)
 router.put('/orders/:orderId/approve/:itemId',authenticateAdminToken,approveReturnRequest)
 router.put('/orders/:orderId/decline/:itemId',authenticateAdminToken,declineReturnRequest)
+
+
+
+//coupons
+router.post('/coupons',authenticateAdminToken,createCoupon)
+router.get('/coupons',authenticateAdminToken,showCoupons)
+router.patch('/coupons/:couponId',authenticateAdminToken,changeCouponStatus)
+//offers
+router.get('/offers',authenticateAdminToken,fetchOffers)
+router.post('/offers/products',authenticateAdminToken,createProductoffer)
+router.post('/offers/categories',authenticateAdminToken,createCategoryoffer)
+router.get('/offers/products',authenticateAdminToken,fetchProducts)
+
+//banner
+router.get('/banners',authenticateAdminToken,fetchBanners)
+router.patch('/banners/:bannerId',authenticateAdminToken,deleteBanner)
+router.put('/banners/:bannerId',authenticateAdminToken,editBanner)
+router.post('/banners',authenticateAdminToken,addBanner)
+
+//sales
+router.get('/sales',authenticateAdminToken,fetchSalesData)
 
 export default router

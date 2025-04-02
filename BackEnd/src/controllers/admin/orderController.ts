@@ -1,5 +1,5 @@
 import Order from "../../model/orderModel"
-import Product from "../../model/ProductModel"
+import Product from "../../model/productModel"
 import Wallet from "../../model/walletModel";
 import { v4 as uuidv4 } from "uuid";
 import {  NextFunction, Request, Response } from "express";

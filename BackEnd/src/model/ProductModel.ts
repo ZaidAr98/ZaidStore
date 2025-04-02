@@ -23,14 +23,48 @@ const productSchema = new mongoose.Schema<ProductType>(
     images: [{ type: String, required: true }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    offerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Offer', default: null },
+    totalStock: {
+      type: Number,
+      default: 0,
+    },
+    isFeatured:{
+      type:Boolean,
+      default:false
+    },
+    
+    reviews:[
+      {
+        name:{
+          type:String,
+        },
+        rating:{
+          type:Number
+        },
+        comment:{
+          type:String,
+        },
+        createdAt:{
+          type:Date,
+          default:Date.now,
+        }
+      }
+    ],
   },
   { timestamps: true }
 );
 
-productSchema.pre<ProductType>('save', function (next) {
+productSchema.pre<ProductType>("save", function (next) {
+  this.totalStock = this.sizes.reduce((sum, size) => sum + size.stock, 0);
+  next();
+});
+
+// Middleware for updating the updatedAt field
+productSchema.pre<ProductType>("save", function (next) {
   this.updatedAt = new Date();
   next();
 });
+
 
 // Create the model
 const Product = mongoose.model<ProductType>('Product', productSchema);
