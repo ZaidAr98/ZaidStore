@@ -42,6 +42,7 @@ interface ActivityLog {
 }
 
 export interface OrderType extends Document {
+  retryAttempts: number;
   orderNumber: string;
   userId: Types.ObjectId;
   customerName: string;
@@ -56,6 +57,7 @@ export interface OrderType extends Document {
   shippingAddress: ShippingAddress;
   paymentMethod: "Cash on Delivery" | "Credit Card" | "PayPal" | "Wallet" | "Razorpay" | "UPI";
   paymentStatus: "Pending" | "Paid" | "Unpaid" | "Refunded" | "Failed";
+  paymentIntentId:string;
   transactionId?: string;
   orderDate: Date;
   expectedDeliveryDate?: Date;

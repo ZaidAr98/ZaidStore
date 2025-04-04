@@ -41,7 +41,8 @@ export const cancelOrder = async(req:Request,res:Response):Promise<void>=>{
        res.status(404).json({ error: "order not found" });
        return
     }
-    const item = order?.items.find((item: OrderItem) => item._id.toString() === itemId);  if (!item) {
+    const item = order?.items.find((item: OrderItem) => item._id.toString() === itemId); 
+     if (!item) {
        res.status(404).json({ error: "Item not found in this order" });
        return
     }
